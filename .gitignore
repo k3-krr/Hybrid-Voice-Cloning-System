@@ -1,0 +1,29 @@
+# Virtual environments
+venv/
+streamlit_env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated audio
+output.wav
+hybrid_voice_output.wav
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Audio files
+*.wav
+*.webm
+
+# Temporary and generated folders
+backend/outputs/
+backend/temp/
+# Next.js
+frontend/node_modules/
+frontend/.next/
+
+# FFmpeg binaries
+backend/ffmpeg_bin/

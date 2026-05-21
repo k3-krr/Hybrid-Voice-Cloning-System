@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+TTS
+torch
+torchaudio
+noisereduce
+scipy
+pydub
