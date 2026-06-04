@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import uuid
 import os
-
+import traceback
 from utils import setup_temp_dirs, save_upload_file, apply_noise_reduction, ensure_wav
 from tts_engine import generate_blended_audio, get_tts_model
 
@@ -100,8 +100,13 @@ async def generate_voice(
         
         return {"status": "success", "audio_url": f"/api/audio/{output_filename}"}
 
+
     except Exception as e:
-        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+        print("FULL ERROR:")
+        traceback.print_exc()
+
+        return JSONResponse(status_code=500,content={"status": "error","message": str(e),"type": str(type(e))}
+    )
 
 @app.get("/api/audio/{filename}")
 async def get_audio(filename: str):

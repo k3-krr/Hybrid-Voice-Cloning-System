@@ -11,14 +11,19 @@ MODEL_NAME = "tts_models/multilingual/multi-dataset/xtts_v2"
 
 def get_tts_model():
     global _tts_model
+
     if _tts_model is None:
-        print("[TTS Engine] Loading Coqui TTS model... (This may take a while on CPU)")
-        # If no GPU, it will fallback to CPU. But let's be explicit if needed.
-        # We check torch.cuda.is_available() but user said CPU only.
+        print("MODEL STEP A: Starting model load")
+
         device = "cuda" if torch.cuda.is_available() else "cpu"
+        print(f"MODEL STEP B: Device = {device}")
+
         _tts_model = TTS(model_name=MODEL_NAME).to(device)
-        print(f"[TTS Engine] Model loaded on {device}.")
+
+        print("MODEL STEP C: Model loaded")
+
     return _tts_model
+
 
 def generate_blended_audio(
     text: str,
@@ -28,37 +33,36 @@ def generate_blended_audio(
     language: str,
     output_path: Path
 ):
-    """
-    Generate audio blending two voices based on the ratio.
-    ratio: 0-100 (e.g. 70 means 70% voice1, 30% voice2)
-    """
+    print("STEP 1: Entered generate_blended_audio")
+
+    print("STEP 2: About to load model")
     tts = get_tts_model()
-    
-    # Calculate how many times to include each voice in the speaker_wav list
-    # We use a scale of 10 to keep the list reasonably sized
+    print("STEP 3: Model loaded successfully")
+
     v1_count = max(1, round(ratio / 10))
     v2_count = max(1, round((100 - ratio) / 10))
-    
+
     speaker_mix = []
     for _ in range(v1_count):
         speaker_mix.append(str(voice1_path))
     for _ in range(v2_count):
         speaker_mix.append(str(voice2_path))
-        
-    print(f"[TTS Engine] Speaker mix ratio: {v1_count}:{v2_count} -> {len(speaker_mix)} conditioning files")
 
-    # For CPU optimization, we keep beam search simple
+    print(f"[TTS Engine] Speaker mix ratio: {v1_count}:{v2_count}")
+
+    print("STEP 4: About to call tts_to_file")
+
     tts.tts_to_file(
         text=text,
         speaker_wav=speaker_mix,
         language=language,
         file_path=str(output_path),
-        # CPU optimized settings (lower beams, standard temp)
         temperature=0.7,
         repetition_penalty=2.0,
         top_k=50,
         top_p=0.85,
-        # CPU speedup: use lower beams or none
-        # num_beams=1,
     )
+
+    print("STEP 5: tts_to_file completed")
+
     return output_path
