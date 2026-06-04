@@ -1,4 +1,6 @@
 import os
+os.environ["COQUI_TOS_AGREED"] = "1"
+os.environ["TTS_AGREED"] = "1"
 import torch
 from pathlib import Path
 from TTS.api import TTS
