@@ -11,6 +11,19 @@ A full-stack application that allows you to clone and blend two distinct voices 
 - **CPU Optimized**: Uses a streamlined generation pipeline suitable for running on machines without a dedicated NVIDIA GPU.
 
 ---
+## Screenshots
+
+### Landing Page
+<img width="100%" src="https://github.com/user-attachments/assets/26027722-2a64-42b2-b982-2e69bfba12e6" />
+
+### Voice Studio
+<img width="100%" src="https://github.com/user-attachments/assets/a029c4d5-e3e3-47c7-8eb6-15f6de10ccd3" />
+
+### Generation Interface
+<img width="100%" src="https://github.com/user-attachments/assets/8b91414f-8b7c-47e6-a8aa-97760b00936f" />
+
+### Output Preview
+<img width="100%" src="https://github.com/user-attachments/assets/205541ef-911f-4f75-9784-4e01b3f19357" />
 
 ## Folder Structure
 - `/frontend`: Next.js React application (UI/UX).
