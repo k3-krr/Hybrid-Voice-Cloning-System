@@ -7,3 +7,4 @@ torchaudio
 noisereduce
 scipy
 pydub
+transformers==4.41.2
